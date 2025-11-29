@@ -11,27 +11,47 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  setup:
-    name: ⚡ Setup Node & pnpm
+  commitlint:
+    name: 🧩 Commitlint
     runs-on: ubuntu-latest
-    outputs:
-      node-version: ${{ steps.node-version.outputs.node-version }}
+    if: github.actor != 'dependabot[bot]'
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v6
 
       - name: ⎔ Setup Node
-        id: node-version
         uses: actions/setup-node@v6
         with:
           node-version: 24
 
-      - name: 📥 Setup pnpm
+      - name: 📥 Setup PNPM
         uses: pnpm/action-setup@v4
         with:
           version: latest
 
-      - name: 📦 Cache pnpm store
+      - name: 📥 Install dependencies
+        run: pnpm install
+
+      - name: 🧩 Validate commits
+        uses: wagoid/commitlint-github-action@v6
+
+  format:
+    name: 💅 Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: ⎔ Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: 📥 Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: 📦 Cache PNPM store
         uses: actions/cache@v4
         with:
           path: ~/.pnpm-store
@@ -42,48 +62,95 @@ jobs:
       - name: 📥 Install dependencies
         run: pnpm install
 
-  commitlint:
-    name: 🧩 Commitlint
-    needs: setup
-    runs-on: ubuntu-latest
-    if: github.actor != 'dependabot[bot]'
-    steps:
-      - uses: actions/checkout@v6
-      - name: 🧩 Validate commits
-        uses: wagoid/commitlint-github-action@v6
-
-  format:
-    name: 💅 Prettier
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
       - name: 💅 Check formatting
         run: pnpm format
 
   lint:
     name: ⬣ ESLint
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
+      - name: ⎔ Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: 📥 Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: 📦 Cache PNPM store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
       - name: 🔬 Lint
         run: pnpm lint
 
   test:
     name: 🧪 Vitest
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
+      - name: ⎔ Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: 📥 Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: 📦 Cache PNPM store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
       - name: 🧪 Run tests
         run: pnpm test -- --run
 
   build:
     name: 🚀 Build
-    needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+
+      - name: ⎔ Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: 📥 Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: 📦 Cache PNPM store
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: 📥 Install dependencies
+        run: pnpm install
+
       - name: 🚀 Build
         run: pnpm build
