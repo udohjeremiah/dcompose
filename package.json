@@ -28,10 +28,13 @@
   },
   "sideEffects": false,
   "scripts": {
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
     "build": "rm -rf dist && tsc"
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "prettier": "^3.7.2",
     "typescript": "^5.9.3"
   }
 }
