@@ -32,6 +32,7 @@
     "format:fix": "prettier --write .",
     "lint": "eslint . --ext .ts,.mts,.js,.mjs",
     "lint:fix": "eslint . --ext .ts,.mts,.js,.mjs --fix",
+    "test": "vitest",
     "build": "rm -rf dist && tsc"
   },
   "devDependencies": {
@@ -49,7 +50,8 @@
     "globals": "^16.5.0",
     "prettier": "^3.7.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.48.0"
+    "typescript-eslint": "^8.48.0",
+    "vitest": "^4.0.14"
   },
   "config": {
     "commitizen": {
