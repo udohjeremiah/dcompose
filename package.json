@@ -35,8 +35,13 @@
     "build": "rm -rf dist && tsc"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@commitlint/types": "^20.0.0",
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-simple-import-sort": "^12.1.1",
@@ -45,5 +50,10 @@
     "prettier": "^3.7.2",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
