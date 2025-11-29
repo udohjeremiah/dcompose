@@ -1,0 +1,33 @@
+{
+  "name": "dcompose",
+  "version": "1.0.0",
+  "description": "Developer-friendly CLI wrapper for Docker Compose with superpowers.",
+  "keywords": [
+    "docker",
+    "docker-compose",
+    "docker compose",
+    "compose",
+    "container",
+    "orchestration",
+    "tooling",
+    "devops",
+    "developer-tools",
+    "dx",
+    "cli",
+    "terminal"
+  ],
+  "author": "Udoh Jeremiah <hello@udohjeremiah.com> (https://udohjeremiah.com)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/udohjeremiah/dcompose.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
